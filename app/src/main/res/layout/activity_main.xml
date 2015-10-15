@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="Logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Brugernavn"
+        android:id="@+id/lblUser"
+        android:layout_above="@+id/txtUser"
+        android:layout_alignLeft="@+id/lblPassword"
+        android:layout_alignStart="@+id/lblPassword"
+        android:layout_marginBottom="28dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtUser"
+        android:width="300dp"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/txtPassword"
+        android:layout_alignStart="@+id/txtPassword" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Adgangskode"
+        android:id="@+id/lblPassword"
+        android:layout_marginTop="37dp"
+        android:layout_below="@+id/txtUser"
+        android:layout_toLeftOf="@+id/imageView"
+        android:layout_toStartOf="@+id/imageView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/txtPassword"
+        android:layout_marginTop="28dp"
+        android:width="300dp"
+        android:layout_below="@+id/lblPassword"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log på"
+        android:id="@+id/btnCreate"
+        android:layout_below="@+id/txtPassword"
+        android:layout_alignLeft="@+id/lblPassword"
+        android:layout_alignStart="@+id/lblPassword"
+        android:width="145dp"
+        android:onClick="onClick_Logon" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:id="@+id/btnSubmit"
+        android:layout_alignTop="@+id/btnCreate"
+        android:layout_alignRight="@+id/txtPassword"
+        android:layout_alignEnd="@+id/txtPassword"
+        android:width="145dp"
+        android:onClick="onClick_Submit" />
+
+</RelativeLayout>
