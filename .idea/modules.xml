@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HouseEnabler.iml" filepath="$PROJECT_DIR$/HouseEnabler.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/house-enabler.iml" filepath="$PROJECT_DIR$/house-enabler.iml" />
     </modules>
   </component>
 </project>
