@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClick_Submit(View view)
     {
         // we intent to go to CreateUser class
+
         Intent i = new Intent(this, CreateUser.class);
 
         startActivity(i);
