@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick_Submit(View view)
     {
-        //Intent i = new Intent(this, createuser.class);
+        Intent i = new Intent(this, CreateUser.class);
 
-        //startActivity(i);
+        startActivity(i);
     }
 
 
