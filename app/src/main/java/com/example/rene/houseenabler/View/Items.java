@@ -56,6 +56,7 @@ public class Items extends Activity
         listAdapter = new ExpandableAdapter(this,listParrents, listChilds);
 
         expListView.setAdapter(listAdapter);
+
     }
 
     @Override
