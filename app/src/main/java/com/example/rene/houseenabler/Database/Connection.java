@@ -29,6 +29,8 @@ public class Connection extends SQLiteOpenHelper
     public static final String COLUMN_ITEM_PARRENT_ID = "_idparrent";
     public static final String COLUMN_ITEM_PARRENT_NAME = "parrentname";
 
+    public static final String[] ALL_PARRENTS = new String[]{COLUMN_ITEM_PARRENT_ID, COLUMN_ITEM_PARRENT_NAME };
+
     // table child
     public static final String TABLE_ITEM_CHILD = "child";
     public static final String COLUMN_ITEM_CHILD_ID = "_idchild";
