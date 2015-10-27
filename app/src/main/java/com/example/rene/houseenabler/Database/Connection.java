@@ -8,15 +8,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
-import com.example.rene.houseenabler.Model.Item;
 import com.example.rene.houseenabler.Model.User;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-
 
 
 /**

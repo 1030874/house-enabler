@@ -46,11 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick_Logon(View view)
     {
-        User user = new User(txtUser.getText().toString() , txtPassword.getText().toString());
+       Intent i = new Intent(this, Items.class);
 
-        conn.addUser(user);
-
-        //user = txtUser.getText();
+        startActivity(i);
 
 
     }

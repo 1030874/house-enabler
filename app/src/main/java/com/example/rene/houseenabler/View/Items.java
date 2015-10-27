@@ -1,21 +1,61 @@
 package com.example.rene.houseenabler.View;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.content.Context;
+
+import android.database.Cursor;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import com.example.rene.houseenabler.Controller.ctrUser;
+
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.SimpleCursorTreeAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+
+import com.example.rene.houseenabler.Database.Connection;
+import com.example.rene.houseenabler.Model.ChildItem;
+import com.example.rene.houseenabler.Model.ParrentItem;
 import com.example.rene.houseenabler.R;
 
-public class Items extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.List;
+
+public class Items extends Activity
+{
+    Connection conn;
+    ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
+
+    private List<ParrentItem> listParrents;
+    private HashMap<ParrentItem, List<ChildItem>> listChilds;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        //Intilialze the components
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_items);
+
+        expListView = (ExpandableListView)findViewById(R.id.lvExp);
+
+        //prepareListData();
+
+    }
+
+    private void prepareListData()
+    {
+
+
+        listAdapter = new ExpandableAdapter(this,listParrents, listChilds);
+
+        expListView.setAdapter(listAdapter);
     }
 
     @Override
@@ -39,4 +79,14 @@ public class Items extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
+
+
+
 }
+
+
