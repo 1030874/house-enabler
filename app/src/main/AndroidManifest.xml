@@ -17,6 +17,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".View.CreateUser"
+            android:label="@string/title_activity_create_user" >
+        </activity>
+        <activity
             android:name=".View.Items"
             android:label="@string/title_activity_items" >
         </activity>

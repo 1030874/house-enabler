@@ -65,7 +65,9 @@
         android:layout_alignLeft="@+id/lblPassword"
         android:layout_alignStart="@+id/lblPassword"
         android:width="145dp"
-        android:onClick="onClick_Logon" />
+        android:onClick="logOn" />
+
+
 
     <Button
         android:layout_width="wrap_content"
@@ -76,6 +78,6 @@
         android:layout_alignRight="@+id/txtPassword"
         android:layout_alignEnd="@+id/txtPassword"
         android:width="145dp"
-        android:onClick="onClick_Submit" />
+        android:onClick="subMit" />
 
 </RelativeLayout>

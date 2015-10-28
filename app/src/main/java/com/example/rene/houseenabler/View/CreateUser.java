@@ -1,6 +1,5 @@
 package com.example.rene.houseenabler.View;
 
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,35 +10,41 @@ import com.example.rene.houseenabler.Model.User;
 import com.example.rene.houseenabler.Database.Connection;
 import com.example.rene.houseenabler.R;
 
-/**
- * Created by Rene on 26-10-2015.
- */
-public class CreateUser extends  AppCompatActivity
+
+
+public class CreateUser extends AppCompatActivity
 {
+
     EditText txtUser;
     EditText txtPassword;
 
     Connection conn;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_createuser);
+        setContentView(R.layout.activity_create_user);
 
         // Initialize EditText Control on then the app starts
         txtUser = (EditText) findViewById(R.id.txtUser);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
 
         // Makes connection to the database SQLite
-        conn = new Connection(this, null, null, 1);
+
+
+        conn = new Connection(this,null,null,1);
+
+
+
+
     }
 
-    public void onClick_CreateUser(View view)
+
+
+    public void onCreate(View view)
     {
         User user = new User(txtUser.getText().toString(), txtPassword.getText().toString());
-
-
         conn.addUser(user);
 
 
@@ -49,7 +54,7 @@ public class CreateUser extends  AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_createuser, menu);
+        getMenuInflater().inflate(R.menu.menu_create_user, menu);
         return true;
     }
 
@@ -67,5 +72,4 @@ public class CreateUser extends  AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
 }

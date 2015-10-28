@@ -10,6 +10,8 @@ import android.util.Log;
 
 import com.example.rene.houseenabler.Model.User;
 
+import java.sql.SQLException;
+
 
 /**
  * Created by Rene on 14-10-2015.
@@ -29,7 +31,6 @@ public class Connection extends SQLiteOpenHelper
     public static final String COLUMN_ITEM_PARRENT_ID = "_idparrent";
     public static final String COLUMN_ITEM_PARRENT_NAME = "parrentname";
 
-    public static final String[] ALL_PARRENTS = new String[]{COLUMN_ITEM_PARRENT_ID, COLUMN_ITEM_PARRENT_NAME };
 
     // table child
     public static final String TABLE_ITEM_CHILD = "child";
@@ -40,6 +41,7 @@ public class Connection extends SQLiteOpenHelper
 
     private SQLiteDatabase db;
     private  Connection conn;
+    private  Context mCtx;
 
 
     public Connection(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
@@ -50,6 +52,7 @@ public class Connection extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
+
 
         // create table user.
 
@@ -154,6 +157,13 @@ public class Connection extends SQLiteOpenHelper
 
     }
 
+    public Connection open()
+    {
+        db = conn.getWritableDatabase();
+        return this;
+    }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
@@ -177,17 +187,18 @@ public class Connection extends SQLiteOpenHelper
         db.insert(TABLE_USERS, null, values);
         db.close();
 
+
     }
 
     public Cursor fetchParrent()
     {
         String query = "SELECT * FROM parrent";
-        return db.rawQuery(query, null);
+        return getReadableDatabase().rawQuery(query, null);
     }
 
     public Cursor fetchChildren(String child) {
         String query = "SELECT * FROM child WHERE category = '" + child + "'";
-        return db.rawQuery(query, null);
+        return getReadableDatabase().rawQuery(query, null);
     }
 
 

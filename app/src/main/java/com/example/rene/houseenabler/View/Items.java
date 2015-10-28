@@ -5,59 +5,118 @@ import android.content.Context;
 
 import android.database.Cursor;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.SimpleCursorTreeAdapter;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.ExpandableListView.OnGroupCollapseListener;
-import android.widget.ExpandableListView.OnGroupExpandListener;
 
 import com.example.rene.houseenabler.Database.Connection;
-import com.example.rene.houseenabler.Model.ChildItem;
-import com.example.rene.houseenabler.Model.ParrentItem;
 import com.example.rene.houseenabler.R;
 
-import java.util.HashMap;
-import java.util.List;
 
-public class Items extends Activity
-{
+
+public class Items extends Activity {
+
     Connection conn;
+    SQLiteDatabase db;
     ExpandableListAdapter listAdapter;
-    ExpandableListView expListView;
+    ExpandableListView elv;
 
-    private List<ParrentItem> listParrents;
-    private HashMap<ParrentItem, List<ChildItem>> listChilds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        //Intilialze the components
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_items);
 
-        expListView = (ExpandableListView)findViewById(R.id.lvExp);
 
-        //prepareListData();
+        elv = (ExpandableListView)findViewById(R.id.lvExp);
+
+
+// open the connection
+        conn.open();
+
+        // Makes connection to the database SQLite open
+
+
+        fillData();
+
+
 
     }
 
-    private void prepareListData()
+    private void fillData()
     {
 
 
-        listAdapter = new ExpandableAdapter(this,listParrents, listChilds);
 
-        expListView.setAdapter(listAdapter);
+
+
+
+        Cursor mGroupsCursor;
+
+        mGroupsCursor = conn.fetchParrent();
+
+        startManagingCursor(mGroupsCursor);
+
+        mGroupsCursor.moveToFirst();
+
+        ExpandableListView elv = (ExpandableListView) findViewById(R.id.lvExp);
+
+        MyExpandableListAdapter madapter;
+
+        madapter = new MyExpandableListAdapter(mGroupsCursor, Items.this,
+                R.layout.activity_parrent,                     // Your row layout for a group
+                R.layout.activity_child,                 // Your row layout for a child
+                new String[] { "_idchild" },                      // Field(s) to use from group cursor
+                new int[] { R.id.lblListHeader },                 // Widget ids to put group data into
+                new String[] { "childname" },          // Field(s) to use from child cursors
+                new int[] { R.id.lblListItem });          // Widget ids to put child data into
+
+        elv.setAdapter(madapter);                         // set the list adapter.
+
+
+        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                // Your child click code here
+                return true;
+            }
+        });
+
 
     }
+
+
+
+    public class MyExpandableListAdapter extends SimpleCursorTreeAdapter
+    {
+        public MyExpandableListAdapter(Cursor cursor, Context context, int groupLayout, int childLayout, String[] groupFrom, int[] groupTo, String[] childrenFrom, int[] childrenTo)
+        {
+            super(context, cursor, groupLayout, groupFrom, groupTo, childLayout, childrenFrom, childrenTo);
+        }
+
+        @Override
+        protected Cursor getChildrenCursor(Cursor groupCursor)
+        {
+            Cursor childCursor = conn.fetchChildren(groupCursor.getString(groupCursor.getColumnIndex("category")));
+            startManagingCursor(childCursor);
+            childCursor.moveToFirst();
+            return childCursor;
+        }
+
+    }
+
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,14 +139,4 @@ public class Items extends Activity
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
-
-
-
 }
-
-
