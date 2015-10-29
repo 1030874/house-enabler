@@ -33,7 +33,7 @@ public class CreateUser extends AppCompatActivity
         // Makes connection to the database SQLite
 
 
-        conn = new Connection(this,null,null,1);
+        //conn = new Connection(this,null,null,1);
 
 
 
@@ -45,7 +45,7 @@ public class CreateUser extends AppCompatActivity
     public void onCreate(View view)
     {
         User user = new User(txtUser.getText().toString(), txtPassword.getText().toString());
-        conn.addUser(user);
+       // conn.addUser(user);
 
 
     }

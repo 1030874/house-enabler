@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,17 +39,30 @@ public class Items extends Activity {
         elv = (ExpandableListView)findViewById(R.id.lvExp);
 
 
-// open the connection
-        conn.open();
-
-        // Makes connection to the database SQLite open
+        // open the connection
+        openDB();
 
 
         fillData();
 
 
 
+
+
+
     }
+
+    private void openDB()
+    {
+        conn = new Connection(this);
+        conn.open();
+    }
+
+
+
+
+
+
 
     private void fillData()
     {
@@ -62,6 +76,7 @@ public class Items extends Activity {
 
         mGroupsCursor = conn.fetchParrent();
 
+
         startManagingCursor(mGroupsCursor);
 
         mGroupsCursor.moveToFirst();
@@ -69,6 +84,9 @@ public class Items extends Activity {
         ExpandableListView elv = (ExpandableListView) findViewById(R.id.lvExp);
 
         MyExpandableListAdapter madapter;
+
+
+
 
         madapter = new MyExpandableListAdapter(mGroupsCursor, Items.this,
                 R.layout.activity_parrent,                     // Your row layout for a group
@@ -81,13 +99,20 @@ public class Items extends Activity {
         elv.setAdapter(madapter);                         // set the list adapter.
 
 
-        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+
+
+        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
+        {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
+            {
                 // Your child click code here
                 return true;
             }
         });
+
+
 
 
     }
