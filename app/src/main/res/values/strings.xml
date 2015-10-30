@@ -9,4 +9,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="buttonCreate">Registrer</string>
+    <string name="title_activity_create_parrent">CreateParrent</string>
+    <string name="title_activity_submit_parrent">SubmitParrent</string>
+    <string name="title_activity_new_parrent">NewParrent</string>
+    <string name="title_activity_create_item_parrent">CreateItemParrent</string>
 </resources>

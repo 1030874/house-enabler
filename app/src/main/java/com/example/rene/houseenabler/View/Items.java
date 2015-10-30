@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorTreeAdapter;
 
 import com.example.rene.houseenabler.Database.Connection;
@@ -43,11 +44,6 @@ public class Items extends Activity {
         openDB();
 
 
-        fillData();
-
-
-
-
 
 
     }
@@ -61,20 +57,27 @@ public class Items extends Activity {
 
 
 
-
-
-
     private void fillData()
     {
 
-
-
-
-
-
         Cursor mGroupsCursor;
 
-        mGroupsCursor = conn.fetchParrent();
+        mGroupsCursor = conn.getAllRows();
+
+        String[] parrent = new String[]{Connection.COLUMN_ITEM_PARRENT_ID, Connection.COLUMN_ITEM_PARRENT_NAME};
+
+        int[] toViewsID = new int[]{R.id.lblListHeader};
+
+        SimpleCursorAdapter myCurserAdapter;
+
+        myCurserAdapter = new SimpleCursorAdapter(getBaseContext(), R.layout.activity_parrent, mGroupsCursor, parrent, toViewsID, 0);
+
+        ExpandableListView elv = (ExpandableListView) findViewById(R.id.lvExp);
+
+        elv.setAdapter(myCurserAdapter);
+
+
+        /*
 
 
         startManagingCursor(mGroupsCursor);
@@ -96,7 +99,11 @@ public class Items extends Activity {
                 new String[] { "childname" },          // Field(s) to use from child cursors
                 new int[] { R.id.lblListItem });          // Widget ids to put child data into
 
-        elv.setAdapter(madapter);                         // set the list adapter.
+        elv.setAdapter(madapter);
+
+
+
+                            // set the list adapter.
 
 
 
@@ -113,7 +120,7 @@ public class Items extends Activity {
         });
 
 
-
+*/
 
     }
 
@@ -136,11 +143,6 @@ public class Items extends Activity {
         }
 
     }
-
-
-
-
-
 
 
     @Override

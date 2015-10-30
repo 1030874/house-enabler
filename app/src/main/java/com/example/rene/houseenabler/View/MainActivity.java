@@ -1,10 +1,8 @@
 package com.example.rene.houseenabler.View;
 
 import android.app.Activity;
-import android.content.Context;
 
 import android.content.Intent;
-import android.database.Cursor;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,23 +10,9 @@ import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
-import android.widget.SimpleCursorTreeAdapter;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.ExpandableListView.OnGroupCollapseListener;
-import android.widget.ExpandableListView.OnGroupExpandListener;
 
 import com.example.rene.houseenabler.Database.Connection;
-import com.example.rene.houseenabler.Model.ChildItem;
-import com.example.rene.houseenabler.Model.ParrentItem;
 import com.example.rene.houseenabler.R;
-
-import java.util.HashMap;
-import java.util.List;
-
 
 
 public class MainActivity extends Activity {
@@ -48,18 +32,23 @@ public class MainActivity extends Activity {
 
 
         // Initialize EditText Control on then the app starts
-        txtUser = (EditText) findViewById(R.id.txtUser);
+        txtUser = (EditText) findViewById(R.id.txtAddParrent);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
 
 
         // Makes connection to the database SQLite open
-
-
-
+        openDB();
 
 
 
     }
+
+    private void openDB()
+    {
+        conn = new Connection(this);
+        conn.open();
+    }
+
 
 
 
@@ -79,6 +68,14 @@ public class MainActivity extends Activity {
     {
 
         Intent i = new Intent(this, CreateUser.class);
+
+        startActivity(i);
+
+    }
+
+    public void btnCreateData_onClick(View view)
+    {
+        Intent i = new Intent(this, CreateItemParrent.class);
 
         startActivity(i);
 

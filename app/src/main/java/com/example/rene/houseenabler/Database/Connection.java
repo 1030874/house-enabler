@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.nfc.Tag;
 import android.util.Log;
+
+import com.example.rene.houseenabler.Model.ParrentItem;
 import com.example.rene.houseenabler.Model.User;
 
 import java.sql.SQLException;
@@ -31,6 +33,8 @@ public class Connection
     public static final String TABLE_ITEMS_PARRENT = "parrent";
     public static final String COLUMN_ITEM_PARRENT_ID = "_idparrent";
     public static final String COLUMN_ITEM_PARRENT_NAME = "parrentname";
+
+    public static final String[] ALL_PARRENTS = new String[] {COLUMN_ITEM_PARRENT_ID, COLUMN_ITEM_PARRENT_NAME};
 
 
     // table child
@@ -65,11 +69,50 @@ public class Connection
         return this;
     }
 
+    public void addUser(User user)
+    {
+
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_USERNAME,  user.get_username());
+        values.put(COLUMN_PASSWORD, user.get_password());
+
+        db = myDBHelper.getWritableDatabase();
+        db.insert(TABLE_USERS, null, values);
+
+
+
+    }
+
+    public void addParrent(ParrentItem parrentname)
+    {
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_ITEM_PARRENT_NAME, parrentname.get_Parrentname());
+
+        db = myDBHelper.getWritableDatabase();
+        db.insert(TABLE_ITEMS_PARRENT, null, values);
+
+
+    }
+
+
 
     // Close the database connection.
     public void close()
     {
         myDBHelper.close();
+    }
+
+    public Cursor getAllRows()
+    {
+        String where = null;
+        Cursor c = 	db.query(true, TABLE_ITEMS_PARRENT, ALL_PARRENTS, where, null, null, null, null,null);
+        if (c != null)
+        {
+            c.moveToFirst();
+        }
+        return c;
     }
 
     public Cursor fetchParrent()
@@ -116,6 +159,27 @@ public class Connection
             _db.execSQL(query_child);
 
 
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase _db, int oldVersion, int newVersion)
+        {
+            Log.w(TAG, "Upgrading application's database from version " + oldVersion
+                    + " to " + newVersion + ", which will destroy all old data!");
+
+            // Destroy old database:
+            _db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+            _db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS_PARRENT);
+            _db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEM_CHILD);
+
+            // Recreate new database:
+            onCreate(_db);
+        }
+
+/*
+
+        public  void insertData(SQLiteDatabase db)
+        {
 
 
 
@@ -124,9 +188,9 @@ public class Connection
             String A = "INSERT INTO parrent (_idparrent, parrentname) VALUES (1, 'A')";
             String B = "INSERT INTO parrent (_idparrent, parrentname) VALUES (2, 'B')";
             String C = "INSERT INTO parrent (_idparrent, parrentname) VALUES (3, 'C')";
-            SQLiteStatement statement1 = _db.compileStatement(A);
-            SQLiteStatement statement2 = _db.compileStatement(B);
-            SQLiteStatement statement3 = _db.compileStatement(C);
+            SQLiteStatement statement1 = db.compileStatement(A);
+            SQLiteStatement statement2 = db.compileStatement(B);
+            SQLiteStatement statement3 = db.compileStatement(C);
             long rowId1 = statement1.executeInsert();
             long rowId2 = statement2.executeInsert();
             long rowId3 = statement3.executeInsert();
@@ -149,9 +213,9 @@ public class Connection
 
             {
 
-                _db.beginTransaction();
+                db.beginTransaction();
                 String sql = "INSERT INTO child (_idchild, category, childname, description) VALUES (?, ?, ?, ?)";
-                SQLiteStatement statement = _db.compileStatement(sql);
+                SQLiteStatement statement = db.compileStatement(sql);
 
                 int increase_a = 1;
 
@@ -193,44 +257,22 @@ public class Connection
 
                 }
 
-                _db.setTransactionSuccessful(); // This commits the transaction if there were no exceptions
+                db.setTransactionSuccessful(); // This commits the transaction if there were no exceptions
 
             }
             catch (Exception e)
             {
                 Log.w("Exception:", e);
             } finally {
-                _db.endTransaction();
+                db.endTransaction();
             }
 
 
 
-
-
-
-
-
-
-
-
-
-
         }
+        */
 
-        @Override
-        public void onUpgrade(SQLiteDatabase _db, int oldVersion, int newVersion)
-        {
-            Log.w(TAG, "Upgrading application's database from version " + oldVersion
-                    + " to " + newVersion + ", which will destroy all old data!");
 
-            // Destroy old database:
-           _db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-           _db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS_PARRENT);
-            _db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEM_CHILD);
-
-            // Recreate new database:
-            onCreate(_db);
-        }
     }
 
 

@@ -20,7 +20,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Brugernavn"
         android:id="@+id/lblUser"
-        android:layout_above="@+id/txtUser"
+        android:layout_above="@+id/txtAddParrent"
         android:layout_alignLeft="@+id/lblPassword"
         android:layout_alignStart="@+id/lblPassword"
         android:layout_marginBottom="28dp" />
@@ -28,7 +28,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtUser"
+        android:id="@+id/txtAddParrent"
         android:width="300dp"
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/txtPassword"
@@ -41,7 +41,7 @@
         android:text="Adgangskode"
         android:id="@+id/lblPassword"
         android:layout_marginTop="37dp"
-        android:layout_below="@+id/txtUser"
+        android:layout_below="@+id/txtAddParrent"
         android:layout_toLeftOf="@+id/imageView"
         android:layout_toStartOf="@+id/imageView" />
 
@@ -79,5 +79,17 @@
         android:layout_alignEnd="@+id/txtPassword"
         android:width="145dp"
         android:onClick="subMit" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Data"
+        android:id="@+id/btnCreateData"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/btnSubmit"
+        android:layout_alignEnd="@+id/btnSubmit"
+        android:layout_alignLeft="@+id/btnSubmit"
+        android:layout_alignStart="@+id/btnSubmit"
+        android:onClick="btnCreateData_onClick" />
 
 </RelativeLayout>

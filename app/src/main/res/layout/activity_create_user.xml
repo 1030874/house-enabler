@@ -22,19 +22,17 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Brugernavn"
         android:id="@+id/lblUser"
-        android:layout_above="@+id/txtUser"
-        android:layout_alignLeft="@+id/lblPassword"
+        android:layout_below="@+id/imageView"
         android:layout_alignStart="@+id/lblPassword"
-        android:layout_marginBottom="28dp" />
+        android:layout_marginTop="35dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtUser"
+        android:id="@+id/txtAddParrent"
         android:width="300dp"
         android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/txtPassword"
-        android:layout_alignStart="@+id/txtPassword" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,10 +40,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Adgangskode"
         android:id="@+id/lblPassword"
-        android:layout_marginTop="37dp"
-        android:layout_below="@+id/txtUser"
-        android:layout_toLeftOf="@+id/imageView"
-        android:layout_toStartOf="@+id/imageView" />
+        android:layout_below="@+id/txtAddParrent"
+        android:layout_toStartOf="@+id/imageView"
+        android:layout_marginTop="22dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -53,21 +50,21 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/txtPassword"
-        android:layout_marginTop="28dp"
         android:width="300dp"
         android:layout_below="@+id/lblPassword"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/lblPassword"
+        android:layout_marginTop="19dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/buttonCreate"
         android:id="@+id/btnCreate"
-        android:layout_below="@+id/txtPassword"
-        android:layout_alignLeft="@+id/lblPassword"
-        android:layout_alignStart="@+id/lblPassword"
         android:width="145dp"
-        android:onClick="onCreate" />
+        android:onClick="onCreate"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/lblPassword"
+        android:layout_marginBottom="20dp" />
 
 
 </RelativeLayout>

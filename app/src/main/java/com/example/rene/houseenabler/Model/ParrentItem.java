@@ -6,34 +6,34 @@ package com.example.rene.houseenabler.Model;
 public class ParrentItem
 {
 
-    private  String _idparrent;
-    private  String parrentname;
+    private  int _idparrent;
+    private  String _parrentname;
 
     public ParrentItem()
     {
 
     }
 
-    public  ParrentItem(String idparrent, String parrentname)
+    public ParrentItem(String parrentname)
     {
-        this._idparrent = idparrent;
-        this.parrentname = parrentname;
+
+        this._parrentname = parrentname;
 
     }
 
-    public String getParrentname() {
-        return parrentname;
+    public String get_Parrentname() {
+        return _parrentname;
     }
 
-    public void setParrentname(String parrentname) {
-        this.parrentname = parrentname;
+    public void set_Parrentname(String parrentname) {
+        this._parrentname = parrentname;
     }
 
-    public String get_idparrent() {
+    public int get_idparrent() {
         return _idparrent;
     }
 
-    public void set_idparrent(String _idparrent) {
+    public void set_idparrent(int _idparrent) {
         this._idparrent = _idparrent;
     }
 }
