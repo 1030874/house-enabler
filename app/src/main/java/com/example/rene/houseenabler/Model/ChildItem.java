@@ -16,9 +16,9 @@ public class ChildItem {
     private ParrentItem _parrentItem;
 
 
-    public ChildItem(int idchild, int category, String childname, String description)
+    public ChildItem(int category, String childname, String description)
     {
-        this._idchild = idchild;
+
         this._category = category;
         this._childname = childname;
         this._description = description;

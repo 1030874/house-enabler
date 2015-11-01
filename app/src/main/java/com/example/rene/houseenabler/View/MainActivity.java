@@ -32,8 +32,8 @@ public class MainActivity extends Activity {
 
 
         // Initialize EditText Control on then the app starts
-        txtUser = (EditText) findViewById(R.id.txtAddParrent);
-        txtPassword = (EditText) findViewById(R.id.txtPassword);
+        txtUser = (EditText) findViewById(R.id.txtAddUser);
+        txtPassword = (EditText) findViewById(R.id.txtAddPassword);
 
 
         // Makes connection to the database SQLite open
@@ -51,10 +51,7 @@ public class MainActivity extends Activity {
 
 
 
-
-
-
-    public void logOn(View view)
+    public void logOn_onClick(View view)
     {
 
        Intent i = new Intent(this, Items.class);
@@ -64,7 +61,7 @@ public class MainActivity extends Activity {
 
     }
 
-    public void subMit(View view)
+    public void subMit_onClick(View view)
     {
 
         Intent i = new Intent(this, CreateUser.class);
@@ -79,6 +76,13 @@ public class MainActivity extends Activity {
 
         startActivity(i);
 
+    }
+
+    public void btnCreateDataChild_onClick(View view)
+    {
+        Intent i = new Intent(this, CreateItemChild.class);
+
+        startActivity(i);
     }
 
 

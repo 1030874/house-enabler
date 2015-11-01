@@ -21,7 +21,7 @@ public class CreateItemParrent extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_item_parrent);
-        txtAddParrent = (EditText) findViewById(R.id.txtAddParrent);
+        txtAddParrent = (EditText) findViewById(R.id.txtAddUser);
 
     }
 

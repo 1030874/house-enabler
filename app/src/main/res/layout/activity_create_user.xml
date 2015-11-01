@@ -29,7 +29,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtAddParrent"
+        android:id="@+id/txtAddUser"
         android:width="300dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
@@ -40,7 +40,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Adgangskode"
         android:id="@+id/lblPassword"
-        android:layout_below="@+id/txtAddParrent"
+        android:layout_below="@+id/txtAddUser"
         android:layout_toStartOf="@+id/imageView"
         android:layout_marginTop="22dp" />
 
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/txtPassword"
+        android:id="@+id/txtAddPassword"
         android:width="300dp"
         android:layout_below="@+id/lblPassword"
         android:layout_alignStart="@+id/lblPassword"
@@ -61,7 +61,7 @@
         android:text="@string/buttonCreate"
         android:id="@+id/btnCreate"
         android:width="145dp"
-        android:onClick="onCreate"
+        android:onClick="onCreateUser_onClick"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/lblPassword"
         android:layout_marginBottom="20dp" />

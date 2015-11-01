@@ -20,7 +20,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Brugernavn"
         android:id="@+id/lblUser"
-        android:layout_above="@+id/txtAddParrent"
+        android:layout_above="@+id/txtAddUser"
         android:layout_alignLeft="@+id/lblPassword"
         android:layout_alignStart="@+id/lblPassword"
         android:layout_marginBottom="28dp" />
@@ -28,11 +28,11 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtAddParrent"
+        android:id="@+id/txtAddUser"
         android:width="300dp"
         android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/txtPassword"
-        android:layout_alignStart="@+id/txtPassword" />
+        android:layout_alignLeft="@+id/txtAddPassword"
+        android:layout_alignStart="@+id/txtAddPassword" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
         android:text="Adgangskode"
         android:id="@+id/lblPassword"
         android:layout_marginTop="37dp"
-        android:layout_below="@+id/txtAddParrent"
+        android:layout_below="@+id/txtAddUser"
         android:layout_toLeftOf="@+id/imageView"
         android:layout_toStartOf="@+id/imageView" />
 
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/txtPassword"
+        android:id="@+id/txtAddPassword"
         android:layout_marginTop="28dp"
         android:width="300dp"
         android:layout_below="@+id/lblPassword"
@@ -61,11 +61,11 @@
         android:layout_height="wrap_content"
         android:text="Log på"
         android:id="@+id/btnCreate"
-        android:layout_below="@+id/txtPassword"
+        android:layout_below="@+id/txtAddPassword"
         android:layout_alignLeft="@+id/lblPassword"
         android:layout_alignStart="@+id/lblPassword"
         android:width="145dp"
-        android:onClick="logOn" />
+        android:onClick="logOn_onClick" />
 
 
 
@@ -75,21 +75,31 @@
         android:text="Register"
         android:id="@+id/btnSubmit"
         android:layout_alignTop="@+id/btnCreate"
-        android:layout_alignRight="@+id/txtPassword"
-        android:layout_alignEnd="@+id/txtPassword"
+        android:layout_alignRight="@+id/txtAddPassword"
+        android:layout_alignEnd="@+id/txtAddPassword"
         android:width="145dp"
-        android:onClick="subMit" />
+        android:onClick="subMit_onClick" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Data"
-        android:id="@+id/btnCreateData"
+        android:text="Create Data Parrent"
+        android:id="@+id/btnCreateDataParrent"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/btnSubmit"
         android:layout_alignEnd="@+id/btnSubmit"
         android:layout_alignLeft="@+id/btnSubmit"
         android:layout_alignStart="@+id/btnSubmit"
         android:onClick="btnCreateData_onClick" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="create data child"
+        android:id="@+id/btnCreateDataChild"
+        android:layout_below="@+id/btnCreate"
+        android:layout_alignStart="@+id/txtAddPassword"
+        android:layout_alignEnd="@+id/btnCreate"
+        android:onClick="btnCreateDataChild_onClick" />
 
 </RelativeLayout>

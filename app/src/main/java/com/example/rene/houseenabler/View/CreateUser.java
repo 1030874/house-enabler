@@ -15,8 +15,8 @@ import com.example.rene.houseenabler.R;
 public class CreateUser extends AppCompatActivity
 {
 
-    EditText txtUser;
-    EditText txtPassword;
+    EditText txtAddUser;
+    EditText txtAddPassword;
 
     Connection conn;
 
@@ -27,10 +27,10 @@ public class CreateUser extends AppCompatActivity
         setContentView(R.layout.activity_create_user);
 
         // Initialize EditText Control on then the app starts
-        txtUser = (EditText) findViewById(R.id.txtAddParrent);
-        txtPassword = (EditText) findViewById(R.id.txtPassword);
+        txtAddUser = (EditText) findViewById(R.id.txtAddUser);
+        txtAddPassword = (EditText) findViewById(R.id.txtAddPassword);
 
-        // Makes connection to the database SQLite
+
 
 
         //conn = new Connection(this,null,null,1);
@@ -42,16 +42,15 @@ public class CreateUser extends AppCompatActivity
 
 
 
-    public void onCreate(View view)
+    public void onCreateUser_onClick(View view)
     {
 
-        User user = new User(txtUser.getText().toString(), txtPassword.getText().toString());
+        User user = new User(txtAddUser.getText().toString(), txtAddPassword.getText().toString());
 
         conn = new Connection(this);
 
         conn.addUser(user);
 
-        conn.close();
 
     }
 

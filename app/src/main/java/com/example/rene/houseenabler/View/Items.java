@@ -1,24 +1,26 @@
 package com.example.rene.houseenabler.View;
-
 import android.app.Activity;
 import android.content.Context;
-
-import android.database.Cursor;
-
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.SimpleCursorTreeAdapter;
+import android.widget.TextView;
 
 import com.example.rene.houseenabler.Database.Connection;
+import com.example.rene.houseenabler.Model.ChildItem;
+import com.example.rene.houseenabler.Model.ListData;
+import com.example.rene.houseenabler.Model.ParrentItem;
 import com.example.rene.houseenabler.R;
+
+import java.util.ArrayList;
 
 
 
@@ -28,7 +30,7 @@ public class Items extends Activity {
     SQLiteDatabase db;
     ExpandableListAdapter listAdapter;
     ExpandableListView elv;
-
+    ArrayList<ListData> mArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,11 +39,19 @@ public class Items extends Activity {
         setContentView(R.layout.activity_items);
 
 
-        elv = (ExpandableListView)findViewById(R.id.lvExp);
-
-
         // open the connection
         openDB();
+
+        //load the data from the database.
+        mArrayList = conn.getAllListData();
+
+        //Initiate the list view
+        elv = (ExpandableListView) findViewById(R.id.lvExp);
+
+       listAdapter = new ExpandableListAdapter(this, mArrayList);
+
+        // setting list adapter
+        elv.setAdapter(listAdapter);
 
 
 
@@ -55,112 +65,142 @@ public class Items extends Activity {
     }
 
 
-
-
-    private void fillData()
+    //Adapter class
+    class ExpandableListAdapter extends BaseExpandableListAdapter
     {
 
-        Cursor mGroupsCursor;
+        private Context _context;
+        private ArrayList<ListData> _data;
 
-        mGroupsCursor = conn.getAllRows();
-
-        String[] parrent = new String[]{Connection.COLUMN_ITEM_PARRENT_ID, Connection.COLUMN_ITEM_PARRENT_NAME};
-
-        int[] toViewsID = new int[]{R.id.lblListHeader};
-
-        SimpleCursorAdapter myCurserAdapter;
-
-        myCurserAdapter = new SimpleCursorAdapter(getBaseContext(), R.layout.activity_parrent, mGroupsCursor, parrent, toViewsID, 0);
-
-        ExpandableListView elv = (ExpandableListView) findViewById(R.id.lvExp);
-
-        elv.setAdapter(myCurserAdapter);
-
-
-        /*
-
-
-        startManagingCursor(mGroupsCursor);
-
-        mGroupsCursor.moveToFirst();
-
-        ExpandableListView elv = (ExpandableListView) findViewById(R.id.lvExp);
-
-        MyExpandableListAdapter madapter;
-
-
-
-
-        madapter = new MyExpandableListAdapter(mGroupsCursor, Items.this,
-                R.layout.activity_parrent,                     // Your row layout for a group
-                R.layout.activity_child,                 // Your row layout for a child
-                new String[] { "_idchild" },                      // Field(s) to use from group cursor
-                new int[] { R.id.lblListHeader },                 // Widget ids to put group data into
-                new String[] { "childname" },          // Field(s) to use from child cursors
-                new int[] { R.id.lblListItem });          // Widget ids to put child data into
-
-        elv.setAdapter(madapter);
-
-
-
-                            // set the list adapter.
-
-
-
-
-
-        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
-        {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
-            {
-                // Your child click code here
-                return true;
-            }
-        });
-
-
-*/
-
-    }
-
-
-
-    public class MyExpandableListAdapter extends SimpleCursorTreeAdapter
-    {
-        public MyExpandableListAdapter(Cursor cursor, Context context, int groupLayout, int childLayout, String[] groupFrom, int[] groupTo, String[] childrenFrom, int[] childrenTo)
-        {
-            super(context, cursor, groupLayout, groupFrom, groupTo, childLayout, childrenFrom, childrenTo);
+        public ExpandableListAdapter(Context context, ArrayList<ListData> arrayData) {
+            this._data = arrayData;
+            this._context = context;
         }
 
         @Override
-        protected Cursor getChildrenCursor(Cursor groupCursor)
-        {
-            Cursor childCursor = conn.fetchChildren(groupCursor.getString(groupCursor.getColumnIndex("category")));
-            startManagingCursor(childCursor);
-            childCursor.moveToFirst();
-            return childCursor;
+        public ChildItem getChild(int groupPosition, int childPosititon) {
+            return this._data.get(groupPosition).childItems.get(childPosititon);
         }
 
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            final ChildItem child = getChild(groupPosition, childPosition);
+
+            if (convertView == null) {
+                LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = infalInflater.inflate(R.layout.activity_child, null);
+            }
+
+            final TextView childDescription = (TextView) convertView.findViewById(R.id.row_child_description);
+
+            //set child name
+            final TextView childName = (TextView) convertView.findViewById(R.id.row_child_name);
+            childName.setText(child.get_childname());
+            childName.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    //Toggle description text view when user clicks
+                    if (childDescription.getVisibility() == View.VISIBLE) {
+                        childDescription.setVisibility(View.GONE);  //hide text view if it's visible
+                    } else {
+                        childDescription.setVisibility(View.VISIBLE); //show text view if it's invisible
+                    }
+                }
+            });
+
+            //Set child description
+            childDescription.setText(child.get_description());
+            childDescription.setVisibility(View.GONE);
+            return convertView;
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition)
+        {
+            return this._data.get(groupPosition).childItems.size();
+        }
+
+        @Override
+        public ParrentItem getGroup(int groupPosition)
+        {
+            return this._data.get(groupPosition).parrentItem;
+        }
+
+        @Override
+        public int getGroupCount()
+        {
+            return this._data.size();
+        }
+
+        @Override
+        public long getGroupId(int groupPosition)
+        {
+            return groupPosition;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
+        {
+            ParrentItem headerTitle = getGroup(groupPosition);
+            if (convertView == null)
+            {
+                LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = infalInflater.inflate(R.layout.activity_parrent, null);
+            }
+
+            final TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
+            lblListHeader.setTypeface(null, Typeface.BOLD);
+            lblListHeader.setText(headerTitle.get_Parrentname());
+            return convertView;
+        }
+
+        @Override
+        public boolean hasStableIds()
+        {
+            return false;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
+        }
     }
 
 
+
+
+
+
+
+
+
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_items, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings)
+        {
             return true;
         }
 

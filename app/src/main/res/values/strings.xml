@@ -13,4 +13,5 @@
     <string name="title_activity_submit_parrent">SubmitParrent</string>
     <string name="title_activity_new_parrent">NewParrent</string>
     <string name="title_activity_create_item_parrent">CreateItemParrent</string>
+    <string name="title_activity_create_item_child">CreateItemChild</string>
 </resources>

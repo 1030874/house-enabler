@@ -9,6 +9,9 @@ public class ParrentItem
     private  int _idparrent;
     private  String _parrentname;
 
+
+    private ChildItem child;
+
     public ParrentItem()
     {
 
@@ -36,4 +39,13 @@ public class ParrentItem
     public void set_idparrent(int _idparrent) {
         this._idparrent = _idparrent;
     }
+
+    public ChildItem getChild() {
+        return child;
+    }
+
+    public void setChild(ChildItem child) {
+        this.child = child;
+    }
+
 }

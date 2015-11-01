@@ -29,6 +29,11 @@
             android:label="@string/title_activity_create_item_parrent"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".View.CreateItemChild"
+            android:label="@string/title_activity_create_item_child"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

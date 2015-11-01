@@ -10,14 +10,14 @@ import android.nfc.Tag;
 import android.util.Log;
 
 import com.example.rene.houseenabler.Model.ParrentItem;
+import com.example.rene.houseenabler.Model.ChildItem;
+import com.example.rene.houseenabler.Model.ListData;
 import com.example.rene.houseenabler.Model.User;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
-/**
- * Created by Rene on 14-10-2015.
- */
 public class Connection
 {
     private static final String TAG = "Connection"; //used for logging database version changes
@@ -34,15 +34,15 @@ public class Connection
     public static final String COLUMN_ITEM_PARRENT_ID = "_idparrent";
     public static final String COLUMN_ITEM_PARRENT_NAME = "parrentname";
 
-    public static final String[] ALL_PARRENTS = new String[] {COLUMN_ITEM_PARRENT_ID, COLUMN_ITEM_PARRENT_NAME};
-
-
     // table child
     public static final String TABLE_ITEM_CHILD = "child";
     public static final String COLUMN_ITEM_CHILD_ID = "_idchild";
     public static final String COLUMN_ITEM_CHILD_CATEGORY = "category";
     public static final String COLUMN_ITEM_CHILD_NAME = "childname";
     public static final String COLUMN_ITEM_CHILD_DESCRIPTION = "description";
+
+    public static final String[] ALL_PARRENTS = new String[] {COLUMN_ITEM_PARRENT_ID, COLUMN_ITEM_PARRENT_NAME};
+    public static final String[] ALL_CHILD = new String[]{COLUMN_ITEM_CHILD_CATEGORY, COLUMN_ITEM_CHILD_NAME, COLUMN_ITEM_CHILD_DESCRIPTION};
 
 
     private static final String DATABASE_NAME = "house_enabler.db";
@@ -104,6 +104,50 @@ public class Connection
         myDBHelper.close();
     }
 
+    public ArrayList<ListData> getAllListData()
+    {
+        ArrayList<ListData> arrayList = new ArrayList<>();
+
+        //Get all the parent item
+        Cursor c = db.query(true, TABLE_ITEMS_PARRENT, ALL_PARRENTS, null, null, null, null, null, null);
+        ParrentItem p;
+        while (c.moveToNext())
+        {
+            p = new ParrentItem();
+
+            //Read data from the selected columns of the database
+            p.set_idparrent(c.getInt(c.getColumnIndex(COLUMN_ITEM_PARRENT_ID)));    //parent id
+            p.set_Parrentname(c.getString(c.getColumnIndex(COLUMN_ITEM_PARRENT_NAME))); //parent name
+
+            //Get child list where child category = parent id
+            ArrayList<ChildItem> childArray = new ArrayList<>();
+            Cursor c1 = db.query(true, TABLE_ITEM_CHILD, ALL_CHILD, COLUMN_ITEM_CHILD_CATEGORY + " =?",
+                    new String[]{p.get_idparrent() + ""}, null, null, null, null);
+            ChildItem child;
+
+            Log.d("cursor ", c1.getCount() + "");
+            while (c1.moveToNext()) {
+                child = new ChildItem(c1.getInt(c1.getColumnIndex(COLUMN_ITEM_CHILD_CATEGORY)),
+                        c1.getString(c1.getColumnIndex(COLUMN_ITEM_CHILD_NAME)), c1.getString(c1.getColumnIndex(COLUMN_ITEM_CHILD_DESCRIPTION)));
+
+                //Add to child array
+                childArray.add(child);
+            }
+
+            ListData data = new ListData();
+            data.parrentItem = p;
+            data.childItems = childArray;
+            arrayList.add(data);
+            c1.close();
+        }
+
+        //close the cursor
+        c.close();
+        return arrayList;
+    }
+
+
+
     public Cursor getAllRows()
     {
         String where = null;
@@ -121,9 +165,9 @@ public class Connection
         return myDBHelper.getReadableDatabase().rawQuery(query, null);
     }
 
-    public Cursor fetchChildren(String _idchild)
+    public Cursor fetchChildren(String _id)
     {
-        String query = "SELECT * FROM child WHERE category =  '" + _idchild + "'";
+        String query = "SELECT * FROM child WHERE category =  '" + _id + "'";
         return myDBHelper.getReadableDatabase().rawQuery(query, null);
     }
 
@@ -159,6 +203,7 @@ public class Connection
             _db.execSQL(query_child);
 
 
+            insertData(_db);
         }
 
         @Override
@@ -176,7 +221,7 @@ public class Connection
             onCreate(_db);
         }
 
-/*
+
 
         public  void insertData(SQLiteDatabase db)
         {
@@ -270,7 +315,7 @@ public class Connection
 
 
         }
-        */
+
 
 
     }
