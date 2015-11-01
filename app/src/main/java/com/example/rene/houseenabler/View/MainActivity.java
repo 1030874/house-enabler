@@ -70,20 +70,7 @@ public class MainActivity extends Activity {
 
     }
 
-    public void btnCreateData_onClick(View view)
-    {
-        Intent i = new Intent(this, CreateItemParrent.class);
 
-        startActivity(i);
-
-    }
-
-    public void btnCreateDataChild_onClick(View view)
-    {
-        Intent i = new Intent(this, CreateItemChild.class);
-
-        startActivity(i);
-    }
 
 
 

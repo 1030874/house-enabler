@@ -80,26 +80,4 @@
         android:width="145dp"
         android:onClick="subMit_onClick" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create Data Parrent"
-        android:id="@+id/btnCreateDataParrent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btnSubmit"
-        android:layout_alignEnd="@+id/btnSubmit"
-        android:layout_alignLeft="@+id/btnSubmit"
-        android:layout_alignStart="@+id/btnSubmit"
-        android:onClick="btnCreateData_onClick" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="create data child"
-        android:id="@+id/btnCreateDataChild"
-        android:layout_below="@+id/btnCreate"
-        android:layout_alignStart="@+id/txtAddPassword"
-        android:layout_alignEnd="@+id/btnCreate"
-        android:onClick="btnCreateDataChild_onClick" />
-
 </RelativeLayout>

@@ -33,7 +33,6 @@ public class CreateUser extends AppCompatActivity
 
 
 
-        //conn = new Connection(this,null,null,1);
 
 
 

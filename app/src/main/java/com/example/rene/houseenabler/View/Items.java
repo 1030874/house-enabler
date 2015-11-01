@@ -9,10 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rene.houseenabler.Database.Connection;
 import com.example.rene.houseenabler.Model.ChildItem;
@@ -21,10 +23,11 @@ import com.example.rene.houseenabler.Model.ParrentItem;
 import com.example.rene.houseenabler.R;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
-
-public class Items extends Activity {
+public class Items extends Activity
+{
 
     Connection conn;
     SQLiteDatabase db;
@@ -37,7 +40,6 @@ public class Items extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_items);
-
 
         // open the connection
         openDB();
@@ -52,9 +54,6 @@ public class Items extends Activity {
 
         // setting list adapter
         elv.setAdapter(listAdapter);
-
-
-
 
     }
 
@@ -72,26 +71,32 @@ public class Items extends Activity {
         private Context _context;
         private ArrayList<ListData> _data;
 
-        public ExpandableListAdapter(Context context, ArrayList<ListData> arrayData) {
+        public ExpandableListAdapter(Context context, ArrayList<ListData> arrayData)
+        {
             this._data = arrayData;
             this._context = context;
         }
 
         @Override
-        public ChildItem getChild(int groupPosition, int childPosititon) {
+        public ChildItem getChild(int groupPosition, int childPosititon)
+        {
             return this._data.get(groupPosition).childItems.get(childPosititon);
         }
 
         @Override
-        public long getChildId(int groupPosition, int childPosition) {
+        public long getChildId(int groupPosition, int childPosition)
+        {
+
             return childPosition;
         }
 
         @Override
-        public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, final ViewGroup parent)
+        {
             final ChildItem child = getChild(groupPosition, childPosition);
 
-            if (convertView == null) {
+            if (convertView == null)
+            {
                 LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.activity_child, null);
             }
@@ -101,24 +106,56 @@ public class Items extends Activity {
             //set child name
             final TextView childName = (TextView) convertView.findViewById(R.id.row_child_name);
             childName.setText(child.get_childname());
-            childName.setOnClickListener(new View.OnClickListener()
-            {
+
+            childName.setOnClickListener(new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View v) {
+                                                 //Toggle description text view when user clicks
+                                                 if (childDescription.getVisibility() == View.VISIBLE) {
+                                                     childDescription.setVisibility(View.GONE);  //hide text view if it's visible
+                                                 } else {
+                                                     childDescription.setVisibility(View.VISIBLE); //show text view if it's invisible
+                                                 }
+                                             }
+
+
+                                         }
+
+
+            );
+
+
+
+
+            childName.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v)
+                public boolean onLongClick(View v)
                 {
-                    //Toggle description text view when user clicks
-                    if (childDescription.getVisibility() == View.VISIBLE) {
-                        childDescription.setVisibility(View.GONE);  //hide text view if it's visible
-                    } else {
-                        childDescription.setVisibility(View.VISIBLE); //show text view if it's invisible
-                    }
+                    childName.setText("fffffff");
+                   // int itemType = ExpandableListView.getPackedPositionType(childPosition);
+                    //if (itemType == ExpandableListView.PACKED_POSITION_TYPE_CHILD)
+                    //{
+                      //  childDescription.setVisibility(View.GONE);
+                    //}
+
+
+                    return true;
                 }
             });
 
+
+
+
+
+
+
             //Set child description
-            childDescription.setText(child.get_description());
+                childDescription.setText(child.get_description());
             childDescription.setVisibility(View.GONE);
             return convertView;
+
+
+
         }
 
         @Override

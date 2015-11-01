@@ -42,7 +42,7 @@ public class Connection
     public static final String COLUMN_ITEM_CHILD_DESCRIPTION = "description";
 
     public static final String[] ALL_PARRENTS = new String[] {COLUMN_ITEM_PARRENT_ID, COLUMN_ITEM_PARRENT_NAME};
-    public static final String[] ALL_CHILD = new String[]{COLUMN_ITEM_CHILD_CATEGORY, COLUMN_ITEM_CHILD_NAME, COLUMN_ITEM_CHILD_DESCRIPTION};
+    public static final String[] ALL_CHILD = new String[]{COLUMN_ITEM_CHILD_ID, COLUMN_ITEM_CHILD_CATEGORY, COLUMN_ITEM_CHILD_NAME, COLUMN_ITEM_CHILD_DESCRIPTION};
 
 
     private static final String DATABASE_NAME = "house_enabler.db";
@@ -126,9 +126,9 @@ public class Connection
             ChildItem child;
 
             Log.d("cursor ", c1.getCount() + "");
-            while (c1.moveToNext()) {
-                child = new ChildItem(c1.getInt(c1.getColumnIndex(COLUMN_ITEM_CHILD_CATEGORY)),
-                        c1.getString(c1.getColumnIndex(COLUMN_ITEM_CHILD_NAME)), c1.getString(c1.getColumnIndex(COLUMN_ITEM_CHILD_DESCRIPTION)));
+            while (c1.moveToNext())
+            {
+                child = new ChildItem(c1.getInt(c1.getColumnIndex(COLUMN_ITEM_CHILD_CATEGORY)), c1.getString(c1.getColumnIndex(COLUMN_ITEM_CHILD_NAME)), c1.getString(c1.getColumnIndex(COLUMN_ITEM_CHILD_DESCRIPTION )));
 
                 //Add to child array
                 childArray.add(child);
@@ -145,38 +145,6 @@ public class Connection
         c.close();
         return arrayList;
     }
-
-
-
-    public Cursor getAllRows()
-    {
-        String where = null;
-        Cursor c = 	db.query(true, TABLE_ITEMS_PARRENT, ALL_PARRENTS, where, null, null, null, null,null);
-        if (c != null)
-        {
-            c.moveToFirst();
-        }
-        return c;
-    }
-
-    public Cursor fetchParrent()
-    {
-        String query = "SELECT * FROM parrent";
-        return myDBHelper.getReadableDatabase().rawQuery(query, null);
-    }
-
-    public Cursor fetchChildren(String _id)
-    {
-        String query = "SELECT * FROM child WHERE category =  '" + _id + "'";
-        return myDBHelper.getReadableDatabase().rawQuery(query, null);
-    }
-
-
-
-
-
-
-
 
     private static class DatabaseHelper extends SQLiteOpenHelper
     {
