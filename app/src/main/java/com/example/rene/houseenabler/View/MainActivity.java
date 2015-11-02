@@ -9,8 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.rene.houseenabler.Model.User;
 import com.example.rene.houseenabler.Database.Connection;
 import com.example.rene.houseenabler.R;
 
@@ -21,6 +24,8 @@ public class MainActivity extends Activity {
     EditText txtPassword;
 
     Connection conn;
+    Button btnCreate;
+    User u;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,10 +39,16 @@ public class MainActivity extends Activity {
         // Initialize EditText Control on then the app starts
         txtUser = (EditText) findViewById(R.id.txtAddUser);
         txtPassword = (EditText) findViewById(R.id.txtAddPassword);
+         btnCreate = (Button) findViewById(R.id.btnCreate);
 
 
         // Makes connection to the database SQLite open
         openDB();
+
+
+
+
+
 
 
 
@@ -51,15 +62,40 @@ public class MainActivity extends Activity {
 
 
 
+
+
     public void logOn_onClick(View view)
     {
+        /*
+
+
+        txtUser.getText().toString();
+        txtPassword.getText().toString();
+
+
+        if(conn.check_User_Pin_Number(username, password))
+        {
+            Toast.makeText(MainActivity.this, "Rigtigt!", Toast.LENGTH_LONG).show();
+        }
+
+        else
+        {
+            Toast.makeText(MainActivity.this,"Forkert", Toast.LENGTH_LONG).show();
+        }
+
+
+   */
+
+
 
        Intent i = new Intent(this, Items.class);
 
-        startActivity(i);
+       startActivity(i);
 
 
     }
+
+
 
     public void subMit_onClick(View view)
     {

@@ -41,6 +41,8 @@ public class Connection
     public static final String COLUMN_ITEM_CHILD_NAME = "childname";
     public static final String COLUMN_ITEM_CHILD_DESCRIPTION = "description";
 
+
+    public static final String[] ALL_USERS = new String[]{COLUMN_USER_ID,COLUMN_USERNAME, COLUMN_PASSWORD };
     public static final String[] ALL_PARRENTS = new String[] {COLUMN_ITEM_PARRENT_ID, COLUMN_ITEM_PARRENT_NAME};
     public static final String[] ALL_CHILD = new String[]{COLUMN_ITEM_CHILD_ID, COLUMN_ITEM_CHILD_CATEGORY, COLUMN_ITEM_CHILD_NAME, COLUMN_ITEM_CHILD_DESCRIPTION};
 
@@ -104,16 +106,63 @@ public class Connection
         myDBHelper.close();
     }
 
+    public Boolean check_User_Pin_Number(String username, String password)
+    {
+        db = myDBHelper.getWritableDatabase();
+
+        // Setting up the cursor which points to the desired table
+        Cursor cursor = db.rawQuery("SELECT * FROM " + ALL_USERS, null);
+
+        Boolean records_Exist = false;
+
+        // Checking if the table has values other than the header using the cursor
+        if(cursor != null && cursor.getCount() > 0)
+        {
+            // Moving the cursor to the first row in the table
+            cursor.moveToFirst();
+
+            do
+            {
+                // Checking if the user name provided by the user exists in the database
+                if(cursor.getString(cursor.getColumnIndex(COLUMN_USERNAME)).equals(username))
+                {
+                    if(password.equals(cursor.getColumnIndex(COLUMN_PASSWORD))) {
+                        records_Exist = true;
+                        break;
+                    }
+                }
+
+            }
+            while(cursor.moveToNext()); // Moves to the next row
+        };
+
+        // Closing the cursor
+        cursor.close();
+
+        // Closing the database
+        db.close();
+
+        return records_Exist;
+    }
+
+
+
     public ArrayList<ListData> getAllListData()
     {
         ArrayList<ListData> arrayList = new ArrayList<>();
 
         //Get all the parent item
         Cursor c = db.query(true, TABLE_ITEMS_PARRENT, ALL_PARRENTS, null, null, null, null, null, null);
+
+
         ParrentItem p;
+
+
         while (c.moveToNext())
         {
             p = new ParrentItem();
+
+
 
             //Read data from the selected columns of the database
             p.set_idparrent(c.getInt(c.getColumnIndex(COLUMN_ITEM_PARRENT_ID)));    //parent id
@@ -121,14 +170,15 @@ public class Connection
 
             //Get child list where child category = parent id
             ArrayList<ChildItem> childArray = new ArrayList<>();
-            Cursor c1 = db.query(true, TABLE_ITEM_CHILD, ALL_CHILD, COLUMN_ITEM_CHILD_CATEGORY + " =?",
-                    new String[]{p.get_idparrent() + ""}, null, null, null, null);
+
+            Cursor c1 = db.query(true, TABLE_ITEM_CHILD, ALL_CHILD, COLUMN_ITEM_CHILD_CATEGORY + " =?", new String[]{p.get_idparrent() + ""}, null, null, null, null);
+
             ChildItem child;
 
             Log.d("cursor ", c1.getCount() + "");
             while (c1.moveToNext())
             {
-                child = new ChildItem(c1.getInt(c1.getColumnIndex(COLUMN_ITEM_CHILD_CATEGORY)), c1.getString(c1.getColumnIndex(COLUMN_ITEM_CHILD_NAME)), c1.getString(c1.getColumnIndex(COLUMN_ITEM_CHILD_DESCRIPTION )));
+                child = new ChildItem(c1.getInt(c1.getColumnIndex(COLUMN_ITEM_CHILD_CATEGORY)), c1.getString(c1.getColumnIndex(COLUMN_ITEM_CHILD_NAME)), c1.getString(c1.getColumnIndex(COLUMN_ITEM_CHILD_DESCRIPTION)));
 
                 //Add to child array
                 childArray.add(child);

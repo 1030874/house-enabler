@@ -2,10 +2,13 @@ package com.example.rene.houseenabler.View;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.example.rene.houseenabler.Model.User;
 import com.example.rene.houseenabler.Database.Connection;
 import com.example.rene.houseenabler.R;
@@ -43,12 +46,23 @@ public class CreateUser extends AppCompatActivity
 
     public void onCreateUser_onClick(View view)
     {
+        if(!TextUtils.isEmpty(txtAddUser.getText().toString() + txtAddPassword.getText().toString()))
+        {
+            User user = new User(txtAddUser.getText().toString(), txtAddPassword.getText().toString());
+            conn = new Connection(this);
+            conn.addUser(user);
 
-        User user = new User(txtAddUser.getText().toString(), txtAddPassword.getText().toString());
+            Toast.makeText(CreateUser.this,"Bruger oprettet", Toast.LENGTH_LONG).show();
+        }
 
-        conn = new Connection(this);
+        else
+        {
+            Toast.makeText(CreateUser.this,"Indtask brugernavn og adgangskode", Toast.LENGTH_LONG).show();
+        }
 
-        conn.addUser(user);
+
+
+
 
 
     }
